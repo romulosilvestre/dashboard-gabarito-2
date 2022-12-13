@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "oYInnRfzCnwXeJKJsk0vYoReINbA/kbA4XOUYC2dOZOQOKVzPUixW4xSO3wSxKorJRsgOq8tJ8EmI/xYZRB3AA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\romul\\Desktop\\MicroLabs\\MicroLabs.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\romul\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,133 @@
+@page "/postapi"
+@using voeairlines_blazor.Data
+@inject Pages.Services.AppData AppData
+<div class="container">
+
+    <div class="row">
+        <div class="col-6">
+
+            <!--Consulte o manual do recursos bootstrap utilizados nesse componente: -DropDown:https://getbootstrap.com/docs/5.1/components/dropdowns/-->
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+
+                        <div class="fw-bold">SENAI-MATUTINO-C#</div>
+                        <select class="form-select" size="8" aria-label="size 8 select example"
+                            @onchange="SelecionarApiAluno">
+                            <option selected>Selecione um aluno</option>
+                            <option value="1">Diogo</option>
+                            <option value="2">Jeziel</option>
+                            <option value="3">Danilo</option>
+                            <option value="4">Anderson</option>
+                            <option value="5">Jonatas</option>
+                            <option value="6">Nayara</option>
+                            <option value="7">Geovane</option>
+                            <option value="8">Flavio</option>
+
+                        </select>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">Total: 08 Alunos</span>
+                </li>
+            </ol>
+            <!--Consulte o manual do recursos bootstrap utilizados nesse componente: -DropDown:https://getbootstrap.com/docs/5.1/components/dropdowns/-->
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+
+                        <div class="fw-bold">CCI-VESPERTINO-C#</div>
+                        <select class="form-select" size="8" aria-label="size 8 select example"
+                            @onchange="SelecionarApiAluno">
+                            <option selected>Selecione um aluno</option>
+                            <option value="1">Aguardando...</option>
+                            <option value="2">Aguardando...</option>
+                            <option value="3">Aguardando...</option>
+                            <option value="4">Aguardando...</option>
+                            <option value="5">Aguardando...</option>
+                            <option value="6">Aguardando...</option>
+                            <option value="7">Aguardando...</option>
+                            <option value="8">Aguardando...</option>
+
+                        </select>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">Total: Aguardando...</span>
+                </li>
+            </ol>
+            <!--Consulte o manual do recursos bootstrap utilizados nesse componente: -DropDown:https://getbootstrap.com/docs/5.1/components/dropdowns/-->
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+
+                        <div class="fw-bold">SENAC-Noturno-C#</div>
+                        <select class="form-select" size="8" aria-label="size 8 select example"
+                            @onchange="SelecionarApiAluno">
+                            <option selected>Selecione um aluno</option>
+                            <option value="1">Aguardando...</option>
+                            <option value="2">Aguardando...</option>
+                            <option value="3">Aguardando...</option>
+                            <option value="4">Aguardando...</option>
+                            <option value="5">Aguardando...</option>
+                            <option value="6">Aguardando...</option>
+                            <option value="7">Aguardando...</option>
+                            <option value="8">Aguardando...</option>
+
+                        </select>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">Total: Aguardando...</span>
+                </li>
+            </ol>
+
+        </div>
+        <div class="col">
+            <div style="width:600px;height:50px;background:yellow;color:black;">
+                Rota do Aluno:<b style="color:black;"><a href="@url">@url</a></b>
+            </div>
+            <div style="width:600px;height:150px;">
+            @if (ItemIdSelected != 0)
+            {
+                    <FormPost />
+            }
+            </div>
+           <!--Tabela deve mostrar aqui-->         
+        
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+@code {
+
+
+    private string? url { get; set; } = "";
+    private int ItemIdSelected;
+
+
+    private void SelecionarApiAluno(ChangeEventArgs e)
+    {
+        if (e.Value != null)
+        {
+            ItemIdSelected = int.Parse(e.Value.ToString());
+
+            switch (ItemIdSelected)
+            {
+                case 1: url = "http://diogoestudante-001-site1.gtempurl.com/api/login"; break;
+                case 2: url = "http://jezielalmeida-001-site1.btempurl.com/api/login"; break;
+                case 3: url = "http://destruidor911-001-site1.itempurl.com/api/login"; break;
+                case 4: url = "http://mrd34dpooly-001-site1.ftempurl.com/api/login"; break;
+                case 5: url = "http://jonatasx-001-site1.ftempurl.com/api/login"; break;
+                case 6: url = "http://nayara-001-site1.htempurl.com/api/login"; break;
+                case 7: url = "http://geovanevr77-001-site1.ftempurl.com/api/login"; break;
+                case 8: url = "http://bsilvaflav-001-site1.itempurl.com/api/login"; break;
+                default: break;
+            }
+        }
+    }
+
+
+
+}

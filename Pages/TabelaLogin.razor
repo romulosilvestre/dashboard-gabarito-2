@@ -1,0 +1,111 @@
+@page "/tabelalogin"
+@using Newtonsoft.Json
+@using voeairlines_blazor.Data
+@inject HttpClient client
+@inject Services.AppData AppData
+@inject Services.LoginService _loginService
+
+<div style="width:600px;height:450px;margin-top:75px;">
+
+    <div class="container bg-white bg-opacity-75 text-white mx-2 p-4 border col">
+        <h4 class="fw-bold">Lista de Usuários</h4>
+
+        <table class="table table-light table-sm table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Usuário</th>
+                    <th>Data Criação</th>
+                    <th>Deletar</th>
+                    <th>Atualizar</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-corpo">
+                @if (Usuarios != null)
+                {
+                    @foreach (var usuario in Usuarios)
+                    {
+                        <tr class="justify-content-center">
+                            <td>@usuario.Id</td>
+                            <td>@usuario.Usuario</td>
+                            <td>@usuario.DataCriacao</td>
+                            <td><button type="button" class="btn btn-danger"
+                            @onclick="()=>DeleteUser(usuario.Id)">Deletar</button></td>
+                            <td><button type="button" class="btn btn-warning"
+                            @onclick="()=>AtualizarUser(usuario)">Atualizar</button>
+                            </td>
+                        </tr>
+                    }
+                   @if(AtualizaDialogOpen){
+                    @Id
+                    @Usuario
+                          <ModalDialog Id=@Id Usuario=@Usuario/>
+                    }
+                 
+                    @msgDelete
+                    @AppData.Nome
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+@code {
+    List<Login>? Usuarios;
+    private string? msgDelete = "aguardando...";
+    private bool AtualizaDialogOpen{get;set;} = false;
+    private int Id{get;set;}
+    private string? Usuario{get;set;}
+
+    private async void GetUser()
+    {
+        var apiName = "http://jezielalmeida-001-site1.btempurl.com/api/login";
+        var httpResponse = await client.GetAsync(apiName);
+        if (httpResponse.IsSuccessStatusCode)
+        {
+            Usuarios = new List<Login>();
+            var apiConteudo = await httpResponse.Content.ReadAsStringAsync();
+            Usuarios = JsonConvert.DeserializeObject<List<Login>>(apiConteudo);
+            StateHasChanged();
+
+        }
+    }
+    private async Task DeleteUser(int id)
+    {
+
+        var apiName = $"http://jezielalmeida-001-site1.btempurl.com/api/login/{id}";
+        msgDelete = "Deletando:" + id;
+        var httpResponse = await client.DeleteAsync(apiName);
+        if (httpResponse.IsSuccessStatusCode)
+        {
+
+            GetUser();
+
+        }
+
+    }
+    private async void AtualizarUser(Login usuario)
+    {
+
+        _loginService.Id = usuario.Id;
+        _loginService.Usuario = usuario.Usuario;
+        msgDelete = $"Dados que serão atualizados:{_loginService.Id}-{_loginService.Usuario}";
+       Id = _loginService.Id;
+       Usuario = _loginService.Usuario;
+       AtualizaDialogOpen = true;
+    }
+
+
+    protected override void OnInitialized()
+    {
+        GetUser();
+        AppData.TabelaAtiva = true;
+
+    }
+
+
+
+}
